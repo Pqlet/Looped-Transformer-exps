@@ -1,9 +1,5 @@
-# Looped Transformers are Better at Learning Learning Algorithms
-Liu Yang, Kangwook Lee, Robert D. Nowak, Dimitris Papailiopoulos 
-
-The code of this repo is based on https://github.com/Leiay/looped_transformer.
-
-You can find the paper in [arxiv](https://arxiv.org/abs/2311.12424).
+# Experiments with Looped Transformer from Yang et al.
+The code of this repo is based on https://github.com/Leiay/looped_transformer. You can find the paper in [arxiv](https://arxiv.org/abs/2311.12424).
 
 
 ## Overview
