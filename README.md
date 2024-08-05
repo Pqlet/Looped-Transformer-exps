@@ -37,7 +37,7 @@ The dilated `n_loop_window` seems to not yield any significant differences on th
 
    <p align="center" width="100%">
     <img width="100%" src="imgs_results/LR_err_dilated.png">
-     <em>Figure 2: MSE over in-context examples for different dilation values for `n_loop_window`, `b=60`, `n_loop_window=15`. </em>
+     <em>Figure 2: MSE over in-context examples for different dilation values of `n_loop_window`, `b=60`, `n_loop_window=15`. </em>
     </p>
 
 ## Setup
