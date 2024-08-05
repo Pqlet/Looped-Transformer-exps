@@ -42,9 +42,10 @@ conda activate loop_tf
     # b=100 T=20
     python scripts/train.py --config configs/base_loop_cheap.yaml --model.n_layer 1  --training.curriculum.loops.start 20  --training.curriculum.loops.end 100   --training.n_loop_window 20   --wandb.name "LR_loop_L1_ends{100}_T{20}"  --gpu.n_gpu 0 --model.n_embd=128 --training.train_steps=100000 --training.curriculum.points.end=41 
     ```
-    2.2 Train the probing model
+    2.2. Train the probing model
    ```shell
    # Probe script
    python scripts/model_probe.py --lr 0.001 --target-mode "Wols" --n-gpus 0 --wandb-name "Prob-base-hyp1"
    ```
+    2.3. To plot the probing MSE refer to the notebook `model_probing_plot_result_point2.ipynb`
 3) To plot and compare with baseline methods, refer to notebooks in the `jupyter_notebooks` folder.
