@@ -30,13 +30,15 @@ The reduction of `training.curriculum.dims.end` was tried, but it does not reduc
   
 ### 3) Dilated `n_loop_window` training - does it allow to boost performance ?
 
-   <p align="center" width="100%">
-    <img width="100%" src="imgs_results/LR_err_dilated.png">
-     <em>Figure 2: MSE over in-context examples for different dilation values for `n_loop_window` value, `b=60`, `n_loop_window=15`. </em>
-    </p>
+The idea of this experiment is to check how does the performance of the model changes if it uses not just `T` last loop iterations, but every 2nd/3rd/4th last iterations. The hyperparams for the runs are `b=60`, `n_loop_window=15`.
 
 The dilated `n_loop_window` seems to not yield any significant differences on the performance. This can stem from the same reason the Scheduled Training procedure does not impact the outcome significantly as the authors state in section 5.1: 
-> In general, the decision to use or not to use the scheduling does not significantly impact the outcome.  
+> In general, the decision to use or not to use the scheduling does not significantly impact the outcome.
+
+   <p align="center" width="100%">
+    <img width="100%" src="imgs_results/LR_err_dilated.png">
+     <em>Figure 2: MSE over in-context examples for different dilation values for `n_loop_window`, `b=60`, `n_loop_window=15`. </em>
+    </p>
 
 ## Setup
 The PyTorch version has been upgraded to 2.2.2. Please install and activate the environment through
@@ -46,8 +48,8 @@ conda activate loop_tf
 ```
 
 ## Running Experiments
-1) For looped transformer with dilated `n_loop_window` training, refer to and execute  `bash exec/script_loop_dilated.sh`.
-  ds 
+1) For looped transformer with dilated `n_loop_window` training, refer to and execute  `bash exec/script_loop_dilated.sh`. To plot and compare runs with different dilations, refer to notebook `jupyter_notebooks/Figures_dilated_loops.ipynb`.
+ 
 2) For probing experiments:
 
    2.1. Train transformer models
@@ -65,4 +67,3 @@ conda activate loop_tf
    python scripts/model_probe.py --lr 0.001 --target-mode "Wols" --n-gpus 0 --wandb-name "Prob-base-hyp1"
    ```
     2.3. To plot the probing MSE refer to the notebook `model_probing_plot_result_point2.ipynb`
-4) To plot and compare with baseline methods, refer to notebooks in the `jupyter_notebooks` folder.
