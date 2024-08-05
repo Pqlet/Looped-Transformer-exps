@@ -32,7 +32,7 @@ The reduction of `training.curriculum.dims.end` was tried, but it does not reduc
 
 The idea of this experiment is to check how does the performance of the model changes if it uses not just `T` last loop iterations, but every 2nd/3rd/4th last iterations. The motivation was to enhance the performance by paying more attention to the earlier loop iterations. The hyperparams for the runs are `b=60`, `n_loop_window=15`.
 
-The dilated `n_loop_window` seems to not yield any significant differences on the performance. This can stem from the same reason the Scheduled Training procedure does not impact the outcome significantly as the authors state in section 5.1: 
+The dilated `n_loop_window` seems to not yield any significant differences on the performance, see Fig. 2. This can stem from the same reason the Scheduled Training procedure does not impact the outcome significantly as the authors state in section 5.1: 
 > In general, the decision to use or not to use the scheduling does not significantly impact the outcome.
 
    <p align="center" width="100%">
