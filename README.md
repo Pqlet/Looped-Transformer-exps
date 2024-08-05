@@ -6,9 +6,9 @@ The code of this repo is based on https://github.com/Leiay/looped_transformer. Y
 
 Describe the results and work: 
 
-- 1) Optimization of training
-- 2) Probing 
-- 3) Dilation
+  1) Optimization of training
+  2) Probing
+  3) Dilation - does it allow to boost performance ?
 
 
 <p align="center" width="100%">
