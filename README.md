@@ -40,6 +40,8 @@ The dilated `n_loop_window` seems to not yield any significant differences on th
      <em>Figure 2: MSE over in-context examples for different dilation values of `n_loop_window`, `b=60`, `n_loop_window=15`. </em>
     </p>
 
+Maybe the `model.n_embd` hyperparameter should have been greater in order to spot the difference.
+
 ## Setup
 The PyTorch version has been upgraded to 2.2.2. Please install and activate the environment through
 ```shell
