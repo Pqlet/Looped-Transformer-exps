@@ -4,6 +4,13 @@ The code of this repo is based on https://github.com/Leiay/looped_transformer. Y
 
 ## Overview
 
+Describe the results and work: 
+
+- 1) Optimization of training
+- 2) Probing 
+- 3) Dilation
+
+
 <p align="center" width="100%">
     <img width="100%" src="figure.png">
 </p>
