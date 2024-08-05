@@ -1,0 +1,46 @@
+conda activate loop_tf
+cd C:\Users\MQTyor\ai_pc\T-Lab\Foundations-test_task-0724\looped_transformer
+
+# -------------------------------------------
+python scripts/train.py --config configs/base.yaml --wandb.name "LR_baseline" --gpu.n_gpu 0
+
+
+b=30
+T=15
+python scripts/train.py --config configs/base_loop.yaml --model.n_layer 1  --training.curriculum.loops.start 15  --training.curriculum.loops.end 30   --training.n_loop_window 15   --wandb.name "LR_loop_L1_ends{30}_T{15}"  --gpu.n_gpu 0
+
+
+# -----------------------
+# Custom training for efficiency
+
+python scripts/train.py --config configs/base_cheap.yaml --wandb.name "LR_baseline" --gpu.n_gpu 0
+
+python scripts/train.py --config configs/base_cheap.yaml --wandb.name "LR_baseline" --gpu.n_gpu 0 --model.n_dims 4
+
+python scripts/train.py --config configs/base_cheap.yaml --wandb.name "LR_baseline" --gpu.n_gpu 0 --model.n_dims 20
+
+python scripts/train.py --config configs/base_cheap.yaml --wandb.name "LR_baseline-n_embd=128" --gpu.n_gpu 0 
+
+
+
+# ------------
+# Probe run 
+
+python scripts/model_probe.py --lr 0.001 --target-mode "Wols" --n-gpus 0 --wandb-name "Prob-base"
+
+python scripts/model_probe.py --lr 0.001 --target-mode "Wols" --n-gpus 0 --wandb-name "Prob-base" --control-exp True
+
+
+# --------------
+# Probe run for hypothesis check - very much loop steps
+
+# Unloop run for comparison and training time 
+python scripts/train.py --config configs/base_cheap.yaml --wandb.name "LR_baseline-n_embd=128" --gpu.n_gpu 0 --model.n_embd=128 --training.train_steps=100000 --training.curriculum.points.end=41 
+
+# Loop run with many steps
+# b=100 T=20
+python scripts/train.py --config configs/base_loop_cheap.yaml --model.n_layer 1  --training.curriculum.loops.start 20  --training.curriculum.loops.end 100   --training.n_loop_window 20   --wandb.name "LR_loop_L1_ends{100}_T{20}"  --gpu.n_gpu 0 --model.n_embd=128 --training.train_steps=100000 --training.curriculum.points.end=41 
+
+# Probe script
+python scripts/model_probe.py --lr 0.001 --target-mode "Wols" --n-gpus 0 --wandb-name "Prob-base-hyp1"
+
