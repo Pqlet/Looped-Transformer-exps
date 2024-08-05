@@ -4,36 +4,32 @@ The code of this repo is based on https://github.com/Leiay/looped_transformer. Y
 
 ## Overview
 
-Describe the results and work: 
+### 1) Optimization of the training in my experiments
 
-  1) Optimization of training
-  2) Probing MSE divergence experiment
+1) The `training.train_steps` hparam was reduced to 100k (probing exp) and 150k (dilation exp) values.
+2) The `model.n_embd` hparam was reduced to 128 (probing exp) and 64 (dilation exp).
 
-      Commenting the Fig. 8 of the original paper, the authors stated:
-     > "Contrasting with the standard transformer, which decodes the target probe optimally around the 10-th layer, the looped transformer steadily refines its representation, improving the decoding of the target probe with each subsequent loop iteration."
-     
-     The idea of this experiment is to check whether the looped transformer indeed "consistently refines its representations related to the target probes", or the probe error deterioration will also happen akin to the unlooped transformer case. If latter, it might mean that the looped transformer employes the same mechanisms as the standard one, but, due to fewer layers, the same processes happen slower.
+The reduction of `training.curriculum.dims.end` was tried, but it does not reduce the time significantly, so it was omitted.
 
-     The procedure of the experiment follows the section 5.3 of the original paper. The results can be seen at Fig.1. The probe error of the looped transformer does not increase as the loop iteration approches the last one. This can possibly mean that the information inside of the looped transformer is being processed differently. Perhaps the regression task is solved earlier in the unlooped transformer model, and the latter, non-specific to this task, layers entangle the representation, but this is only the speculation. Unfortunately, even the unlooped transformer behaviour does not fully match the paper's results because the probe error does not increase heavily in the end, but this can stem from the optimized training setup that saves time.
+    
+### 2) Probing MSE divergence experiment
 
-     <p align="center" width="100%">
-      <img width="100%" src="imgs_results/model_probe_Wols_line.png">
-       <em>Figure 1: How do the transformer and the looped transformer encode information across layers/iterations ? Two-layer MLP probing model is trained to recover the target probe from the transformer’s output at t-th layer/loop iteration. The number of layers is 20 and loops is 100. </em>
-      </p>
+  Commenting the Fig. 8 of the original paper, the authors stated:
+   > "Contrasting with the standard transformer, which decodes the target probe optimally around the 10-th layer, the looped transformer steadily refines its representation, improving the decoding of the target probe with each subsequent loop iteration."
+   
+   The idea of this experiment is to check whether the looped transformer indeed "consistently refines its representations related to the target probes", or the probe error deterioration will also happen akin to the unlooped transformer case. If latter, it might mean that the looped transformer employes the same mechanisms as the standard one, but, due to fewer layers, the same processes happen slower.
 
-     The biggest constraint of this experiment was the training time. This entailed training for only 1 target probe, no control task, and an early stop for the MLP on the loop Transformer run.
+   The procedure of the experiment follows the section 5.3 of the original paper. The results can be seen at Fig.1. The probe error of the looped transformer does not increase as the loop iteration approches the last one. This can possibly mean that the information inside of the looped transformer is being processed differently. Perhaps the regression task is solved earlier in the unlooped transformer model, and the latter, non-specific to this task, layers entangle the representation, but this is only the speculation. Unfortunately, even the unlooped transformer behaviour does not fully match the paper's results because the probe error does not increase heavily in the end, but this can stem from the optimized training setup that saves time.
 
-     https://github.com/Pqlet/Looped-Transformer-exps/tree/main/imgs_results
+   <p align="center" width="100%">
+    <img width="100%" src="imgs_results/model_probe_Wols_line.png">
+     <em>Figure 1: How do the transformer and the looped transformer encode information across layers/iterations ? Two-layer MLP probing model is trained to recover the target probe from the transformer’s output at t-th layer/loop iteration. The number of layers is 20 and loops is 100. </em>
+    </p>
+
+   The biggest constraint of this experiment was the training time. This entailed training for only 1 target probe, no control task, and an early stop for the MLP on the loop Transformer run. The MLP for the looped transformer wasn’t trained for the 10k steps due to the great time complexity, approximately 5400 steps were done only.
   
-  3) Dilation - does it allow to boost performance ?
+### 3) Dilated `n_loop_window` training - does it allow to boost performance ?
 
-### Optimization of the training
-
-
-
-<p align="center" width="100%">
-    <img width="100%" src="figure.png">
-</p>
 
 
 ## Setup
@@ -45,6 +41,7 @@ conda activate loop_tf
 
 ## Running Experiments
 1) For looped transformer with dilated `n_loop_window` training, refer to and execute  `bash exec/script_loop_dilated.sh`.
+  ds 
 2) For probing experiments:
 
    2.1. Train transformer models
@@ -62,4 +59,4 @@ conda activate loop_tf
    python scripts/model_probe.py --lr 0.001 --target-mode "Wols" --n-gpus 0 --wandb-name "Prob-base-hyp1"
    ```
     2.3. To plot the probing MSE refer to the notebook `model_probing_plot_result_point2.ipynb`
-3) To plot and compare with baseline methods, refer to notebooks in the `jupyter_notebooks` folder.
+4) To plot and compare with baseline methods, refer to notebooks in the `jupyter_notebooks` folder.
