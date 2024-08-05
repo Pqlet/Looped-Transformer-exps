@@ -30,6 +30,11 @@ The reduction of `training.curriculum.dims.end` was tried, but it does not reduc
   
 ### 3) Dilated `n_loop_window` training - does it allow to boost performance ?
 
+   <p align="center" width="100%">
+    <img width="100%" src="imgs_results/LR_err_dilated.png">
+     <em>Figure 2: MSE over in-context examples for different dilation values for `n_loop_window` value, `b=60`, `n_loop_window=15`. </em>
+    </p>
+
 The dilated `n_loop_window` seems to not yield any significant differences on the performance. This can stem from the same reason the Scheduled Training procedure does not impact the outcome significantly as the authors state in section 5.1: 
 > In general, the decision to use or not to use the scheduling does not significantly impact the outcome.  
 
